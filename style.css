@@ -1,4 +1,82 @@
-.margin{
+body{
+    background-color: rgb(45, 39, 39);
+    color: burlywood;
+}
+.header-background-img {
+    background-image: url(StockSnap_BAS8CATWZ6.jpg);
+    background-position: right bottom, left top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 200px;
+}
+.article-background-img {
+    background-image: url(StockSnap_JC64UJMTBU.jpg);
+    background-position: right bottom, left top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 800px;
+}
+.lighter{
+    background-color: rgba(169, 169, 169, 0.62);
+}
+.other-font{
+    font-family: "Source Code Pro", serif;
+    color: black;
+}
+.light-font{
+    color: wheat;
+}
+.jumbotron{
+    background-color: darkslategrey;
+}
+
+small{
+    color: black;
+}
+.card{
+    background-color:  rgba(33, 31, 31, 0.5);
+    color: wheat;
+}
+.darker{
+    background-color: rgba(33, 31, 31, 0.5);
+}
+.form-group input{
+    background-color: darkgrey;
+    color: black;
+}
+.margin-top-bottom{
     margin-bottom: 100px;
     margin-top: 50px;
+}
+.margin-left{
+    margin-left: 200px;
+}
+.padding{
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+.btn-danger{
+    background-color: rgb(122, 2, 40);
+    color: wheat;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.btn-warning{
+    background-color: #084424;
+    color: #000;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.btn-info{
+    background-color: #03032a;
+    color: wheat;
+    font-weight: bold;
+    text-transform: uppercase;
+
+}
+.btn-success{
+ background-color: olive;
+    color: wheat;
+    font-weight: bold;
+    text-transform: uppercase;
 }
