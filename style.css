@@ -55,6 +55,13 @@ small{
     padding-top: 50px;
     padding-bottom: 50px;
 }
+.small-padding{
+    padding: 10px 10px 10px 10px ;
+}
+.border{
+    border: 30px groove;
+    border-radius: 40px 40px 40px 40px;
+}
 .btn-danger{
     background-color: rgb(122, 2, 40);
     color: wheat;
@@ -79,4 +86,7 @@ small{
     color: wheat;
     font-weight: bold;
     text-transform: uppercase;
+}
+.images-references{
+    font-style: italic;
 }
