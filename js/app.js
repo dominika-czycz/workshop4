@@ -5,6 +5,7 @@ $(() => {
          */
         const addNewBook = () => {
             const $button = $('#addBook');
+            if ($button.length === 0) return;
             $button.on('click', function (e) {
                     e.preventDefault();
                     const isbn = $('#isbn').val();
@@ -12,26 +13,28 @@ $(() => {
                     const author = $('#author').val();
                     const publisher = $('#publisher').val();
                     const type = $('#type').val();
-                    if (isbn.length < 1 || title.length < 1 || author.length < 1
-                        || publisher.length < 1 || type.length < 1) {
+                    if (isbn.length === 0 || title.length === 0 || author.length === 0
+                        || publisher.length === 0 || type.length === 0) {
                         alert('Please, complete all fields');
-                    } else {
-                        const $ajax = connectWithREST($(this));
-                        $ajax.done(() => {
-                            getBooks();
-                            alert('New book added successfully');
-                        })
+                        return;
                     }
+                    const $ajax = connectWithREST($(this));
+                    $ajax.done(() => {
+                        createBooksDivs();
+                        alert('New book added successfully');
+                    })
                 }
             )
         }
 
         /**
-         * This function by calling another functions get necessary data from REST API and creates divs with
-         * book title and delete buttons
+         * This function gets necessary data from REST API and creates divs with
+         * book title and delete buttons for all books in the database.
          */
-        const getBooks = () => {
-            $('#books').empty();
+        const createBooksDivs = () => {
+            const $books = $('#books');
+            if ($books.length === 0) return;
+            $books.empty();
             const $ajax = connectWithREST();
             $ajax.done((response) => {
                 response.forEach(el => {
@@ -47,6 +50,7 @@ $(() => {
          */
         const createBookDiv = (book) => {
             const id = book.id;
+            if (id == null) return;
             const title = book.title;
             const $newDiv = $(`
             <div class="card" id="book + ${id}">
@@ -74,6 +78,7 @@ $(() => {
          */
         const showBookDetailsForm = (book) => {
             const id = book.id;
+            if (id == null) return;
             const $bookDetails = $(`
                                     <div class="row text-center book-details">
                                         <div class="card-body text-center">
@@ -110,26 +115,34 @@ $(() => {
             $(`#header-${id}`).after($bookDetails);
             addEditButtonEvent($bookDetails.find('.editBtn'))
         }
+
         /**
-         * This function add click event on delete button and calls the another function to allow connection with REST API
+         * This function add click event on delete button. After click it  calls the another function to allow
+         * connection with REST API to delete a given div. Then if refreshes another books' divs.
          * @param $button jQuery delete button element
          */
         const addDeleteBtnEvent = ($button) => {
+            if ($button.length === 0) return;
             $button.on('click', function (e) {
                 e.preventDefault();
-                const $ajax = connectWithREST($(this));
-                $ajax.done(() => {
-                    getBooks();
-                    alert('Book deleted successfully');
-                })
+                if (confirm('Are you sure you want to delete this book from system?')) {
+                    const $ajax = connectWithREST($(this));
+                    $ajax.done(() => {
+                        createBooksDivs();
+                        alert('Book deleted successfully');
+                    })
+                }
             })
         }
 
         /**
-         * This function add click event on 'info button' and calls the another function to allow connection with REST API
+         * This function add click event on 'info button'. After click, if bookDetails' div has not been created yet it
+         * calls the another function to allow connection with REST API to create  a bookDetails div.
+         * Otherwise it toggles the div.
          * @param $button jQuery info button element
          */
         const addDetailsBtnEvent = ($button) => {
+            if ($button.length === 0) return;
             $button.on('click', function (e) {
                 e.preventDefault();
                 const $bookDetails = $(this).closest('.card').find('.book-details');
@@ -138,14 +151,15 @@ $(() => {
                     $ajax.done((response) => {
                         showBookDetailsForm(response);
                     })
-                } else {
-                    $bookDetails.toggle();
+                    return;
                 }
+                $bookDetails.toggle();
             })
         }
 
         /**
          * This function add click event on 'add button' and calls the another function to allow connection with REST API
+         * and creates book divs after click.
          * @param $button jQuery button element
          */
         const addEditButtonEvent = ($button) => {
@@ -153,7 +167,7 @@ $(() => {
                     e.preventDefault();
                     const ajax = connectWithREST($(this));
                     ajax.done(() => {
-                        getBooks();
+                        createBooksDivs();
                         alert('Book updated successfully');
                     })
                 }
@@ -224,6 +238,6 @@ $(() => {
         }
 
         addNewBook();
-        getBooks();
+        createBooksDivs();
     }
 )
